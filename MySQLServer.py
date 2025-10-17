@@ -1,15 +1,14 @@
-# MySQLServer.py
 import mysql.connector
 from mysql.connector import Error
 
 def create_database():
     connection = None
     try:
-        # Connect to MySQL Server (localhost)
+        # Connect to MySQL server
         connection = mysql.connector.connect(
             host='localhost',
-            user='root',        # default MySQL username in XAMPP
-            password=''         # leave blank if you didn’t set a password
+            user='root',
+            password=''  # Leave empty if no password set in XAMPP
         )
 
         if connection.is_connected():
@@ -17,12 +16,11 @@ def create_database():
             cursor.execute("CREATE DATABASE IF NOT EXISTS alx_book_store")
             print("Database 'alx_book_store' created successfully!")
 
-    except Error as e:
-        print(f"Error while connecting to MySQL: {e}")
+    except mysql.connector.Error as err:
+        print(f"Error while connecting to MySQL: {err}")
 
     finally:
-        if connection and connection.is_connected():
-            cursor.close()
+        if connection is not None and connection.is_connected():
             connection.close()
             print("MySQL connection is closed.")
 
